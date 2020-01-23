@@ -1,0 +1,17 @@
+{% extends 'bootstrap/base.html'%}
+
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" href="{{url_for('static', filename='css/error.css')}}">
+{% endblock %}
+
+{% block content %}
+<div class="noise"></div>
+<div class="overlay"></div>
+<div class="terminal">
+    <h1>Fatal<span class="errorcode">Error</span></h1>
+    <p class="output">Sorry, our Indian man can't understand what do you want</p>
+    <p class="output">Please try to <a href="/">go back</a> or <a href="/">return to the homepage</a>.</p>
+    <p class="output">Good luck.</p>
+</div>
+{% endblock %}

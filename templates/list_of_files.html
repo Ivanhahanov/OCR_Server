@@ -1,0 +1,28 @@
+{% extends 'base.html'%}
+
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="{{url_for('static', filename='css/list.css')}}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-md-center">
+        <div class="col-lg-6">
+            <div class="numberlist">
+                <ol>
+                    {%for file in files%}
+                    <li>
+                        <a href="{{url_for('download', file=file.name) }}">
+                            {{file.name}}
+                            <i class="fa fa-download" aria-hidden="true"></i>
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

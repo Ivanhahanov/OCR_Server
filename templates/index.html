@@ -1,0 +1,20 @@
+{% extends 'base.html'%}
+
+{% block styles %}
+{{super()}}
+{{ dropzone.load_css() }}
+{{ dropzone.style('border: 2px dashed #0087F7; margin: 5%; min-height: 400px;') }}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-md-center">
+        <div class="col-lg-6">
+            {{ dropzone.create(action='upload') }}
+            {{ dropzone.load_js() }}
+            <button id="upload" type="button" class="btn btn-success btn-lg btn-block">Upload</button>
+            {{ dropzone.config() }}
+        </div>
+    </div>
+</div>
+{% endblock %}
