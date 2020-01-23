@@ -9,7 +9,7 @@ sudo apt install libtesseract-dev
 #### Setup
 [Create virtual environment](https://docs.python.org/3/library/venv.html)
 ```concole
-apt-get install python3-venv
+sudo apt-get install python3-venv
 
 python3 -m venv venv
 source venv/bin/activate
