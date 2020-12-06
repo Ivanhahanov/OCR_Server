@@ -13,15 +13,15 @@ Bootstrap(app)
 
 app.config.update(
     DROPZONE_ALLOWED_FILE_TYPE='image',
-    DROPZONE_MAX_FILE_SIZE=3,
-    DROPZONE_MAX_FILES=30,
+    DROPZONE_MAX_FILE_SIZE=10,
+    DROPZONE_MAX_FILES=120,
     DROPZONE_REDIRECT_VIEW='converted',
     DROPZONE_UPLOAD_MULTIPLE=True,
     DROPZONE_UPLOAD_ON_CLICK=True
 )
 dropzone = Dropzone(app)
 
-DB = MongoClient().gridfs
+DB = MongoClient(host=['mongodb:27017']).gridfs
 FS = GridFS(DB)
 
 
@@ -32,13 +32,19 @@ def index():
 
 @app.route('/uploads', methods=['POST'])
 def upload():
+    i = 0
     for key, f in request.files.items():
+        i += 1
         if key.startswith('file'):
             filename = secure_filename(f.filename).split('.')[0]
+            filename += str(i)
             if FS.exists({"filename": f'{filename}.txt'}):
                 continue
-            text = image_to_string(Image.open(f))
-            FS.put(text.encode('utf-8'), content_type='text/plain', filename=f'{filename}.txt')
+            text = image_to_string(Image.open(f), lang='rus')
+            print(text)
+            with open("zip/"+filename+'.txt', 'w') as f1:
+                f1.write(text)
+            FS.put(text.encode('utf-16'), content_type='text/plain', filename=f'{filename}.txt')
     return 'Upload complete'
 
 
@@ -63,4 +69,4 @@ def custom404(error):
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0')
